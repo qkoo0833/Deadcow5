@@ -1,18 +1,18 @@
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/
+    url: jdbc:postgresql://postgres-service:5432/db
     username: vagrant
     password: vagrant
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     properties:
       hibernate:
 # show_sql: true
         format_sql: true
   rabbitmq:
-    host: rabbitmq
+    host: rabbitmq-service
     port: 5672
     username: vagrant
     password: vagrant
