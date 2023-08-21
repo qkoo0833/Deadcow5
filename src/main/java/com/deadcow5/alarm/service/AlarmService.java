@@ -30,6 +30,7 @@ public class AlarmService {
         rabbitTemplate.receiveAndConvert(queueName);
     }
 
+    @Transactional
     public void updateAlarm(String uuid, Long userId) {
         Alarm alarm = alarmsRepository.findByUuid(uuid);
         alarmsRepository.updateUser(alarm, userId);
