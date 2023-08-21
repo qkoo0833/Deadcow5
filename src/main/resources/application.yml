@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:h2:~/test
-    username: sa
-    password: sa
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://db:5432/
+    username: vagrant
+    password: vagrant
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: create
@@ -12,7 +12,7 @@ spring:
 # show_sql: true
         format_sql: true
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: vagrant
     password: vagrant
