@@ -1,0 +1,45 @@
+---
+- name: Install Kubernetes Master Node
+  hosts: k8s-master
+  become: yes
+
+  tasks:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+
+    - name: Install required packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - docker.io
+        - apt-transport-https
+        - curl
+        - kubelet
+        - kubeadm
+        - kubectl
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Initialize Kubernetes cluster (use an appropriate Pod Network CIDR)
+      command: kubeadm init --pod-network-cidr=10.244.0.0/16
+      args:
+        creates: /etc/kubernetes/admin.conf
+      register: kubeadm_output
+
+    - name: Set up kubectl configuration for the current user
+      command: "{{ item }}"
+      loop:
+        - mkdir -p $HOME/.kube
+        - cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+        - chown $(id -u):$(id -g) $HOME/.kube/config
+      when: kubeadm_output.rc == 0
+
+    - name: Install a Pod Network Addon (e.g., Calico)
+      command: kubectl apply -f https://docs.projectcalico.org/v3.11/manifests/calico.yaml
+      when: kubeadm_output.rc == 0
