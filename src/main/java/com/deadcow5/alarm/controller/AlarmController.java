@@ -42,7 +42,7 @@ public class AlarmController {
             alarmRequest.getUrl()
         );
         producer.sendMessage(message);
-        TimeUnit.MILLISECONDS.sleep(100);
+        TimeUnit.MILLISECONDS.sleep(500);
         alarmService.updateAlarm(message.getUuid(), message.getUserId());
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
