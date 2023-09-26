@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alarm-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: alarm-app
+  template:
+    metadata:
+      labels:
+        app: alarm-app
+    spec:
+      containers:
+      - name: alarm-app
+        image: shkoo/alarm:0.0.1-SNAPSHOT
+        ports:
+        - containerPort: 8080
+
