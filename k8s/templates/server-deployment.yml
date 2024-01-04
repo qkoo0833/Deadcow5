@@ -11,10 +11,12 @@ spec:
     metadata:
       labels:
         app: alarm-app
+      annotations:
+        instrumentation.opentelemetry.io/inject-java: "true"
     spec:
       containers:
       - name: alarm-app
-        image: shkoo/alarm:0.0.1-SNAPSHOT
+        image: shkoo/alarm:0.0.9
         ports:
         - containerPort: 8080
 
